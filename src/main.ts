@@ -50,7 +50,7 @@ function updateMap() {
 
   displayButtons()
 
-  if (nbRedPressed >= 0) {
+  if (nbRedPressed >= 1) {
     WA.room.showLayer('doors/door_opened')
     WA.room.hideLayer('doors/door_closed')
 
