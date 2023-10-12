@@ -2,35 +2,15 @@
 
 import { addButtons, buttons } from './features/add-buttons'
 import { chatWithPalcik } from './features/chat-with-palcik'
+import { wocinDzeru } from './features/dzera'
 import { followPlayer } from './features/follow-player'
+import { initStuff } from './helpers/initial-init'
 
 console.log('Script started successfully')
 
-interface TileDescriptor {
-  x: number
-  y: number
-  tile: number | string | null
-  layer: string
-}
-
-enum Quiz {
-  wrota = 'wrota',
-  palcik = 'palcik',
-  pytajMje = 'pytajMje'
-}
-
 WA.onInit()
   .then(async () => {
-    await WA.players.configureTracking({
-      players: true
-    })
-
-    await WA.state
-      .saveVariable('activeQuiz', Quiz.wrota)
-      .catch((e) =>
-        console.error('Something went wrong while saving variable', e)
-      )
-
+    initStuff()
     WA.state.onVariableChange('activeQuiz').subscribe((value) => {
       console.log('Variable "activeQuiz" changed. New value: ', value)
       if (value === Quiz.pytajMje) {
@@ -39,10 +19,8 @@ WA.onInit()
         chatWithPalcik()
       }
     })
-
     addButtons(updateMap)
-    WA.room.showLayer('palcik/wrota')
-    WA.room.hideLayer('palcik/wrota')
+    wocinDzeru()
     updateMap()
   })
   .catch((e) => console.error(e))
@@ -72,7 +50,7 @@ function updateMap() {
 
   displayButtons()
 
-  if (nbRedPressed >= 1) {
+  if (nbRedPressed >= 0) {
     WA.room.showLayer('doors/door_opened')
     WA.room.hideLayer('doors/door_closed')
 
