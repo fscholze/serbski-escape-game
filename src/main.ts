@@ -10,7 +10,22 @@ console.log('Script started successfully')
 
 WA.onInit()
   .then(async () => {
-    initStuff()
+ 
+    await WA.players.configureTracking({
+      players: true
+    })
+  
+    WA.room.showLayer('palcik/wrota')
+    WA.room.hideLayer('palcik/wrota')
+  
+ 
+      await WA.state
+        .saveVariable('activeQuiz', Quiz.wrota)
+        .catch((e) =>
+          console.error('Something went wrong while saving variable', e)
+        )
+    
+
     WA.state.onVariableChange('activeQuiz').subscribe((value) => {
       console.log('Variable "activeQuiz" changed. New value: ', value)
       if (value === Quiz.pytajMje) {
@@ -19,6 +34,10 @@ WA.onInit()
         chatWithPalcik()
       }
     })
+
+    WA.room.showLayer('palcik/wrota')
+     WA.room.hideLayer('palcik/wrota')
+     
     addButtons(updateMap)
     wocinDzeru()
     updateMap()
