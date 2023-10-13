@@ -4,7 +4,7 @@ import { addButtons, buttons } from './features/add-buttons'
 import { chatWithPalcik } from './features/chat-with-palcik'
 import { wocinDzeru } from './features/dzera'
 import { followPlayer } from './features/follow-player'
-import { initStuff } from './helpers/initial-init'
+// import { initStuff } from './helpers/initial-init'
 
 console.log('Script started successfully')
 
