@@ -1,12 +1,12 @@
 export const chatWithPalcik = () => {
-//  const myLayerSubscriber = WA.room
-//    .onEnterLayer('palcik/palcik')
-//    .subscribe(() => {
-//      WA.chat.sendChatMessage(
-//        `Witaj ${WA.player.name}, praji raz, kelko Serbow hisce smy?`,
-//        'Palčik'
-//      )
-//    })
+ const myLayerSubscriber = WA.room
+   .onEnterLayer('palcik/palcik')
+   .subscribe(() => {
+     WA.chat.sendChatMessage(
+       `Witaj ${WA.player.name}, praji raz, kelko Serbow hisce smy?`,
+       'Palčik'
+     )
+   })
 
   WA.room.onLeaveLayer('palcik/palcik').subscribe(() => {
     WA.chat.sendChatMessage('Ne Ne, to chcu netko wedzec!', 'Palčik')
@@ -14,7 +14,7 @@ export const chatWithPalcik = () => {
     WA.room.showLayer('palcik/wrota')
     // WA.room.hideLayer('doors/door_closed');
 
-    // myLayerSubscriber.unsubscribe();
+    myLayerSubscriber.unsubscribe();
   })
 
   WA.chat.onChatMessage((message) => {
