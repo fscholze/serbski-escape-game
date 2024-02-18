@@ -1,3 +1,5 @@
+import { Quiz } from "../types/enums"
+
 export const initStuff = async () => {
   await WA.players.configureTracking({
     players: true
