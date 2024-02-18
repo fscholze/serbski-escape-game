@@ -9,6 +9,7 @@ import { followPlayer } from './features/follow-player'
 // import { initStuff } from './helpers/initial-init'
 
 console.log('Script started successfully')
+let durijeWocinjene = false
 
 WA.onInit()
   .then(async () => {
@@ -57,8 +58,6 @@ function updateMap() {
     button.pressed = false
   }
 
-  let nbRedPressed = 0
-
   const players = [...WA.players.list(), WA.player]
   for (const player of players) {
     const buttonPressed = player.state.buttonPressed
@@ -69,20 +68,20 @@ function updateMap() {
     ) {
       buttons[buttonPressed].pressed = true
       if (buttons[buttonPressed].color === 'red') {
-        nbRedPressed++
+        durijeWocinjene = true
       }
     }
   }
 
   displayButtons()
 
-  if (nbRedPressed >= 1) {
+  if (durijeWocinjene === true) {
     WA.room.showLayer('doors/door_opened')
     WA.room.hideLayer('doors/door_closed')
 
     if (WA.state.loadVariable('activeQuiz') === Quiz.wrota)
       WA.state
-        .saveVariable('activeQuiz', Quiz.pytajMje)
+        .saveVariable('activeQuiz', Quiz.palcik)
         .catch((e) =>
           console.error('Something went wrong while saving variable', e)
         )
