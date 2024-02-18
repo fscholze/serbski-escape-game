@@ -1,8 +1,4 @@
-enum Quiz {
-  wrota = 'wrota',
-  palcik = 'palcik',
-  pytajMje = 'pytajMje'
-}
+
 
 interface TileDescriptor {
   x: number

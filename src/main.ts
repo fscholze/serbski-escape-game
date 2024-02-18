@@ -1,9 +1,11 @@
 /// <reference types="@workadventure/iframe-api-typings" />
-
+import { bootstrapExtra } from "@workadventure/scripting-api-extra";
+import { Quiz } from "./types/enums";
 import { addButtons, buttons } from './features/add-buttons'
 import { chatWithPalcik } from './features/chat-with-palcik'
 import { wocinDzeru } from './features/dzera'
 import { followPlayer } from './features/follow-player'
+
 // import { initStuff } from './helpers/initial-init'
 
 console.log('Script started successfully')
@@ -36,11 +38,16 @@ WA.onInit()
     })
 
     WA.room.showLayer('palcik/wrota')
-     WA.room.hideLayer('palcik/wrota')
+    WA.room.hideLayer('palcik/wrota')
      
     addButtons(updateMap)
     wocinDzeru()
     updateMap()
+
+    // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
+    bootstrapExtra().then(() => {
+      console.log('Scripting API Extra ready');
+    }).catch(e => console.error(e));
   })
   .catch((e) => console.error(e))
 
