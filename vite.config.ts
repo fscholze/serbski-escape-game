@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { defineConfig } from "vite";
 import { getMaps, getMapsOptimizers, getMapsScripts, LogLevel, OptimizeOptions } from "wa-map-optimizer-vite";
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 const maps = getMaps();
 
@@ -31,7 +32,10 @@ export default defineConfig({
             },
         },
     },
-    plugins: [...getMapsOptimizers(maps, optimizerOptions)],
+    plugins: [...getMapsOptimizers(maps),basicSsl()],
+    
+    
+
     server: {
         host: "localhost",
         headers: {
