@@ -3,20 +3,15 @@ import { bootstrapExtra } from "@workadventure/scripting-api-extra";
 import { Quiz } from "./types/enums";
 import { addButtons, buttons } from './features/add-buttons'
 import { chatWithPalcik } from './features/chat-with-palcik'
-import { wocinDzeru } from './features/dzera'
 import { followPlayer } from './features/follow-player'
-import { createPopup } from "./helpers/popup";
-import { setTimeout } from "timers/promises";
-import { calculateDistance } from "./helpers/algorithms";
-import { wulicDistancu } from "./pomocnik/wulic-distancu";
 import { popupNoweWokno } from './akcije/popup'
 
 // import { initStuff } from './helpers/initial-init'
 let dotkanje = 0
-let distance = 0
+
 console.log('Script started successfully')
 let durijeWocinjene = false
-let currentPopup = null
+
 WA.onInit()
   .then(async () => {
 
