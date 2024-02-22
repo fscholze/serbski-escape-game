@@ -5,18 +5,141 @@ import { addButtons, buttons } from './features/add-buttons'
 import { chatWithPalcik } from './features/chat-with-palcik'
 import { wocinDzeru } from './features/dzera'
 import { followPlayer } from './features/follow-player'
+import { createPopup } from "./helpers/popup";
+import { setTimeout } from "timers/promises";
+import { calculateDistance } from "./helpers/algorithms";
+import { wulicDistancu } from "./pomocnik/wulic-distancu";
+import { popupNoweWokno } from './akcije/popup'
 
 // import { initStuff } from './helpers/initial-init'
-
+let dotkanje = 0
+let distance = 0
 console.log('Script started successfully')
 let durijeWocinjene = false
-
+let currentPopup = null
 WA.onInit()
   .then(async () => {
- 
+
+    // sound
+    const mamaspew =  WA.sound.loadSound('src/hudzba/beep.mp3')
+    const config = {
+      volume: 0.5, 
+      loop: false,
+      rate: 4,
+      detune: 1,
+      delay: 0,
+      seek: 0,
+      mute: false
+    }
+
+    WA.players.configureTracking({players:true, movement:true})
+    WA.players.onPlayerMoves.subscribe(({ player, newPosition }) => { 
+      console.log(`${player.name} dze k ${newPosition.x}|${newPosition.y}`)
+     });
+
+
+    WA.ui.actionBar.addButton({
+      label: 'Button za menu', callback: () => { },
+      id: "5"
+    })
+
+
+// loggwac sto su kooridnate wot muzika
+    // WA.player.onPlayerMove((data) => {
+    //     // const { x, y } = data // Object Deconstruction
+    //     const {x, oldX, y, oldY  } = data
+  
+    //     const puc = wulicDistancu(oldX || 0, oldY || 0, x, y)
+        
+    //   distance += 1
+
+    //     console.warn(`${WA.player.name} moving to ${x}|${y} [${distance}]`)
+    // })
+
+    popupNoweWokno()
+    WA.ui.openPopup('countdown', `hisce ${5-dotkanje} kroc`,[{
+      label: 'A',
+      className: 'primary',
+      callback: (popup) => {
+        // Close the popup when the "Close" button is pressed.
+        popup.close()
+      }},
+      {
+        label: 'B',
+        className: 'error',
+        callback: (popup) => {
+          // Close the popup when the "Close" button is pressed.
+          popup.close()
+          WA.player.moveTo(0,0, 50)
+        
+        }}
+    ])
+
+    
+
+
+// wot jedneho mestna k tamnemu skocic
+    WA.room.onEnterLayer('dzera').subscribe(() => {
+// dotken so 3 razy dzery a zahraje so zwuk
+// WA.chat.sendChatMessage(String(dotkanje + 1), 'Juri')
+      dotkanje = dotkanje + 1
+      WA.ui.openPopup('countdown', `hisce ${5-dotkanje} kroc`,[{
+        label: 'A',
+        className: 'primary',
+        callback: (popup) => {
+          // Close the popup when the "Close" button is pressed.
+          popup.close()
+        }},
+        {
+          label: 'B',
+          className: 'error',
+          callback: (popup) => {
+            // Close the popup when the "Close" button is pressed.
+            popup.close()
+            WA.player.moveTo(0,0, 20)
+          }}
+      ])
+      if (dotkanje == 5) {
+        // WA.chat.sendChatMessage(`Upps, to sy to dzere padnyl.`, 'Juri')
+        mamaspew.play(config)
+        // WA.player.moveTo(WA.pl,1,9)
+        WA.nav.goToRoom('map.tmj#cil')
+        dotkanje = 0
+        // WA.nav.goToRoom('map.tmj#moveTo=146,544')
+      }
+    })
+
+    
+
+
+
+
+
+
+
+// setTimeout(1000, WA.chat.sendChatMessage('Kukuk'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     await WA.players.configureTracking({
       players: true
     })
+
   
     WA.room.showLayer('palcik/wrota')
     WA.room.hideLayer('palcik/wrota')
@@ -42,7 +165,10 @@ WA.onInit()
     WA.room.hideLayer('palcik/wrota')
      
     addButtons(updateMap)
-    wocinDzeru()
+    // wocinDzeru()
+
+
+
     updateMap()
 
     // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure

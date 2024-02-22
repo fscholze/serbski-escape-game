@@ -31,7 +31,7 @@ export const followPlayer = (toX: number, toY: number) => {
         if (newDistance < oldDistance) {
           popups.push(
             createPopup(
-              'popup-pytaj-mje',
+              'countdown',
               `To wupada gut, hisce ${Math.floor(newDistance)} krocelow.`
             )
           )
